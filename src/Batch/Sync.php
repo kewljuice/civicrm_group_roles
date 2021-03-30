@@ -24,6 +24,13 @@ class Sync {
   }
 
   /**
+   * Entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Get the batch.
    *
    * @return array
@@ -83,11 +90,11 @@ class Sync {
   public function finished($success, array $results) {
     if ($success) {
       $message = $this->stringTranslation->formatPlural($results['processed'], 'One user processed.', '@count users processed.');
-      drupal_set_message($message);
+      \Drupal::messenger()->addMessage($message);
     }
     else {
       $message = $this->t('Encountered errors while performing sync.');
-      drupal_set_message($message, 'error');
+      \Drupal::messenger()->addMessage($message, 'error');
     }
 
   }

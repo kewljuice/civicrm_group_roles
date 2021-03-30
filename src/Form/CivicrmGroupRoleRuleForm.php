@@ -102,7 +102,7 @@ class CivicrmGroupRoleRuleForm extends EntityForm {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
     $this->entity->save();
-    drupal_set_message($this->t('Your association rule has been saved.'));
+    \Drupal::messenger()->addMessage($this->t('Your association rule has been saved.'));
     $form_state->setRedirect('entity.civicrm_group_role_rule.collection');
   }
 
