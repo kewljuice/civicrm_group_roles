@@ -1,0 +1,10 @@
+{
+    "name": "kewljuice/civicrm_group_roles",
+    "description": "Everything functionally related to CiviCRM group roles.",
+    "type": "drupal-module",
+    "license": "AGPL-3.0",
+    "keywords": [
+        "Drupal 8",
+        "CiviCRM"
+    ]
+}
