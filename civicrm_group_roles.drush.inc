@@ -14,8 +14,8 @@ function civicrm_group_roles_drush_command() {
   $commands['civicrm-group-role-sync'] = [
     'description' => 'Run CiviCRM Group Role Sync.',
     'examples' => [
-      'drush civicrm-member-role-sync --uid=8',
-      'drush civicrm-member-role-sync --contact_id=89',
+      'drush civicrm-group-role-sync --uid=8',
+      'drush civicrm-group-role-sync --contact_id=89',
     ],
     'options' => [
       'uid' => 'Optional User ID',
