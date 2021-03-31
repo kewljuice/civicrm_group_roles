@@ -13,13 +13,6 @@ class SettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  protected function getEditableConfigNames() {
-    return ['civicrm_group_roles.settings'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getFormId() {
     return 'civicrm_group_roles_settings';
   }
@@ -48,6 +41,13 @@ class SettingsForm extends ConfigFormBase {
     $config->set('debugging', $form_state->getValue('debugging'));
     $config->save();
     parent::submitForm($form, $form_state);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEditableConfigNames() {
+    return ['civicrm_group_roles.settings'];
   }
 
 }

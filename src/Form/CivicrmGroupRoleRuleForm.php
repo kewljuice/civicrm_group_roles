@@ -2,6 +2,7 @@
 
 namespace Drupal\civicrm_group_roles\Form;
 
+use Drupal;
 use Drupal\civicrm\Civicrm;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
@@ -97,16 +98,6 @@ class CivicrmGroupRoleRuleForm extends EntityForm {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
-    parent::submitForm($form, $form_state);
-    $this->entity->save();
-    \Drupal::messenger()->addMessage($this->t('Your association rule has been saved.'));
-    $form_state->setRedirect('entity.civicrm_group_role_rule.collection');
-  }
-
-  /**
    * Gets CiviCRM group options.
    *
    * @return array
@@ -146,6 +137,17 @@ class CivicrmGroupRoleRuleForm extends EntityForm {
       /** @var \Drupal\user\Entity\Role $role */
       return $role->get('label');
     }, $roles);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    parent::submitForm($form, $form_state);
+    $this->entity->save();
+    Drupal::messenger()
+      ->addMessage($this->t('Your association rule has been saved.'));
+    $form_state->setRedirect('entity.civicrm_group_role_rule.collection');
   }
 
 }

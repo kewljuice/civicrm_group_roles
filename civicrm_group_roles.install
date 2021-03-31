@@ -15,5 +15,6 @@ function civicrm_group_roles_install() {
   module_set_weight('civicrm_group_roles', 101);
   $link = Link::fromTextAndUrl(t('here'), Url::fromRoute('entity.civicrm_group_role_rule.add_form'));
   $params = ['@link' => $link->toString()];
-  \Drupal::messenger()->addMessage(t('CiviGroup Roles Sync installed. You will need to specify sync rules @link.', $params));
+  Drupal::messenger()
+    ->addMessage(t('CiviGroup Roles Sync installed. You will need to specify sync rules @link.', $params));
 }

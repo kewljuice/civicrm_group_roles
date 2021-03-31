@@ -2,6 +2,9 @@
 
 namespace Drupal\civicrm_group_roles\Batch;
 
+use Drupal;
+use Drupal\Core\Database\Connection;
+use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\user\Entity\User;
@@ -12,16 +15,14 @@ use Drupal\user\Entity\User;
 class Sync {
 
   use StringTranslationTrait;
+  use DependencySerializationTrait;
 
   /**
-   * Sync constructor.
+   * Database.
    *
-   * @param \Drupal\Core\StringTranslation\TranslationInterface $stringTranslation
-   *   The string translation service.
+   * @var \Drupal\Core\Database\Connection
    */
-  public function __construct(TranslationInterface $stringTranslation) {
-    $this->stringTranslation = $stringTranslation;
-  }
+  protected $connection;
 
   /**
    * Entity type manager service.
@@ -29,6 +30,19 @@ class Sync {
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
+
+  /**
+   * Sync constructor.
+   *
+   * @param \Drupal\Core\StringTranslation\TranslationInterface $stringTranslation
+   *   The string translation service.
+   * @param \Drupal\Core\Database\Connection $connection
+   *   Database.
+   */
+  public function __construct(TranslationInterface $stringTranslation, Connection $connection) {
+    $this->stringTranslation = $stringTranslation;
+    $this->connection = $connection;
+  }
 
   /**
    * Get the batch.
@@ -46,10 +60,25 @@ class Sync {
       'finished' => [$this, 'finished'],
     ];
 
-    $uids = $this->getDatabase()->query('SELECT uid FROM {users} WHERE uid > 0')->fetchCol();
+    $uids = $this->getDatabase()
+      ->query('SELECT uid FROM {users} WHERE uid > 0')
+      ->fetchCol();
     $batch['operations'][] = [[$this, 'process'], [$uids]];
 
     return $batch;
+  }
+
+  /**
+   * Get the database connection.
+   *
+   * This is called directly from the Drupal object to avoid dealing with
+   * serialization.
+   *
+   * @return \Drupal\Core\Database\Connection
+   *   The database connection.
+   */
+  protected function getDatabase() {
+    return $this->connection;
   }
 
   /**
@@ -80,6 +109,19 @@ class Sync {
   }
 
   /**
+   * Get CiviCRM group roles service.
+   *
+   * This is called directly from the Drupal object to avoid dealing with
+   * serialization.
+   *
+   * @return \Drupal\civicrm_group_roles\CivicrmGroupRoles
+   *   The CiviCRM group roles service.
+   */
+  protected function getCivicrmGroupRoles() {
+    return Drupal::service('civicrm_group_roles');
+  }
+
+  /**
    * Batch finished callback.
    *
    * @param bool $success
@@ -90,39 +132,13 @@ class Sync {
   public function finished($success, array $results) {
     if ($success) {
       $message = $this->stringTranslation->formatPlural($results['processed'], 'One user processed.', '@count users processed.');
-      \Drupal::messenger()->addMessage($message);
+      Drupal::messenger()->addMessage($message);
     }
     else {
       $message = $this->t('Encountered errors while performing sync.');
-      \Drupal::messenger()->addMessage($message, 'error');
+      Drupal::messenger()->addMessage($message, 'error');
     }
 
-  }
-
-  /**
-   * Get CiviCRM group roles service.
-   *
-   * This is called directly from the Drupal object to avoid dealing with
-   * serialization.
-   *
-   * @return \Drupal\civicrm_group_roles\CivicrmGroupRoles
-   *   The CiviCRM group roles service.
-   */
-  protected function getCivicrmGroupRoles() {
-    return \Drupal::service('civicrm_group_roles');
-  }
-
-  /**
-   * Get the database connection.
-   *
-   * This is called directly from the Drupal object to avoid dealing with
-   * serialization.
-   *
-   * @return \Drupal\Core\Database\Connection
-   *   The database connection.
-   */
-  protected function getDatabase() {
-    return \Drupal::database();
   }
 
 }

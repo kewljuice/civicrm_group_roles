@@ -16,7 +16,7 @@ use Drupal\user\UserInterface;
  * assigned roles.
  */
 function civicrm_group_roles_user_insert(UserInterface $account) {
-  \Drupal::service('civicrm_group_roles')->addGroupsOnCreate($account);
+  Drupal::service('civicrm_group_roles')->addGroupsOnCreate($account);
 }
 
 /**
@@ -26,7 +26,7 @@ function civicrm_group_roles_user_insert(UserInterface $account) {
  * roles.
  */
 function civicrm_group_roles_user_update(UserInterface $account) {
-  \Drupal::service('civicrm_group_roles')->userAddGroups($account);
+  Drupal::service('civicrm_group_roles')->userAddGroups($account);
 }
 
 /**
@@ -36,7 +36,7 @@ function civicrm_group_roles_user_update(UserInterface $account) {
  * are a member of.
  */
 function civicrm_group_roles_user_login(UserInterface $account) {
-  \Drupal::service('civicrm_group_roles')->syncRoles($account);
+  Drupal::service('civicrm_group_roles')->syncRoles($account);
 }
 
 /**
@@ -57,7 +57,8 @@ function civicrm_group_roles_form_alter(&$form, FormStateInterface $form_state, 
   }
 
   // Make sure there is a civicrm record.
-  $contact_id = \Drupal::service('civicrm_group_roles')->getContactId($user->id());
+  $contact_id = Drupal::service('civicrm_group_roles')
+    ->getContactId($user->id());
   if (!$contact_id) {
     return;
   }
@@ -76,7 +77,8 @@ function civicrm_group_rules_user_form_submit($form, FormStateInterface $form_st
   $removed_roles = array_diff($user->getRoles(), $form_state->getValue('roles'));
 
   if ($removed_roles) {
-    \Drupal::service('civicrm_group_roles')->userRemoveGroups($user, $removed_roles);
+    Drupal::service('civicrm_group_roles')
+      ->userRemoveGroups($user, $removed_roles);
   }
 }
 
@@ -92,7 +94,7 @@ function civicrm_group_roles_civicrm_post($op, $objectName, $objectId, &$objectR
   }
 
   /** @var \Drupal\civicrm_group_roles\CivicrmGroupRoles $groupRoles */
-  $groupRoles = \Drupal::service('civicrm_group_roles');
+  $groupRoles = Drupal::service('civicrm_group_roles');
 
   if (!$group = $groupRoles->getGroup($objectId)) {
     return;

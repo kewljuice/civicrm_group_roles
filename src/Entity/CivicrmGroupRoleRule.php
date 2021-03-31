@@ -12,14 +12,16 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   label = @Translation("Association Rule"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\civicrm_group_roles\CivicrmGroupRolesListBuilder",
+ *     "list_builder" =
+ *   "Drupal\civicrm_group_roles\CivicrmGroupRolesListBuilder",
  *     "form" = {
  *       "add" = "Drupal\civicrm_group_roles\Form\CivicrmGroupRoleRuleForm",
  *       "edit" = "Drupal\civicrm_group_roles\Form\CivicrmGroupRoleRuleForm",
  *       "delete" = "Drupal\Core\Entity\EntityDeleteForm"
  *     },
  *     "route_provider" = {
- *       "html" = "Drupal\civicrm_group_roles\CivicrmGroupRoleRuleHtmlRouteProvider",
+ *       "html" =
+ *   "Drupal\civicrm_group_roles\CivicrmGroupRoleRuleHtmlRouteProvider",
  *     },
  *   },
  *   config_prefix = "civicrm_group_role_rule",
@@ -30,10 +32,13 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "uuid" = "uuid"
  *   },
  *   links = {
- *     "canonical" = "/admin/config/civicrm/civicrm-group-roles/rule/{civicrm_group_role_rule}",
+ *     "canonical" =
+ *   "/admin/config/civicrm/civicrm-group-roles/rule/{civicrm_group_role_rule}",
  *     "add-form" = "/admin/config/civicrm/civicrm-group-roles/rule/add",
- *     "edit-form" = "/admin/config/civicrm/civicrm-group-roles/rule/{civicrm_group_role_rule}/edit",
- *     "delete-form" = "/admin/config/civicrm/civicrm-group-roles/rule/{civicrm_group_role_rule}/delete",
+ *     "edit-form" =
+ *   "/admin/config/civicrm/civicrm-group-roles/rule/{civicrm_group_role_rule}/edit",
+ *     "delete-form" =
+ *   "/admin/config/civicrm/civicrm-group-roles/rule/{civicrm_group_role_rule}/delete",
  *     "collection" = "/admin/config/civicrm/civicrm-group-roles"
  *   },
  *   config_export = {

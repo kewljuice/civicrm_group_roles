@@ -32,7 +32,7 @@ function civicrm_group_roles_drush_command() {
  */
 function drush_civicrm_group_roles_civicrm_group_role_sync() {
   /** @var \Drupal\civicrm_group_roles\CivicrmGroupRoles $civicrmGroupRoles */
-  $civicrmGroupRoles = \Drupal::service('civicrm_group_roles');
+  $civicrmGroupRoles = Drupal::service('civicrm_group_roles');
 
   if ($uid = drush_get_option('uid')) {
     if (!$account = User::load($uid)) {
@@ -56,7 +56,7 @@ function drush_civicrm_group_roles_civicrm_group_role_sync() {
       return drush_set_error('CIVICRM_GROUP_ROLES_CONTACT_USER_NOT_FOUND', $message);
     }
 
-    $civicrmGroupRoles = \Drupal::service('civicrm_group_roles');
+    $civicrmGroupRoles = Drupal::service('civicrm_group_roles');
     $civicrmGroupRoles->userAddGroups($account);
     $civicrmGroupRoles->syncRoles($account);
     return;
@@ -64,7 +64,7 @@ function drush_civicrm_group_roles_civicrm_group_role_sync() {
 
   drush_log(dt('Syncing CiviGroup roles.'), 'ok');
   /** @var \Drupal\civicrm_group_roles\Batch\Sync $sync */
-  $sync = \Drupal::service('civicrm_group_roles.batch.sync');
+  $sync = Drupal::service('civicrm_group_roles.batch.sync');
   $batch = $sync->getBatch();
   $batch['progressive'] = FALSE;
   batch_set($batch);

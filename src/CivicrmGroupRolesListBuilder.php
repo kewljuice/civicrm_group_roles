@@ -7,6 +7,7 @@ use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user\Entity\Role;
+use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -81,7 +82,7 @@ class CivicrmGroupRolesListBuilder extends ConfigEntityListBuilder {
     try {
       $result = civicrm_api3('Group', 'getsingle', ['group_id' => $groupId]);
     }
-    catch (\Exception $e) {
+    catch (Exception $e) {
       return $this->t('N/A');
     }
 
