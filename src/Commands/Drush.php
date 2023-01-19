@@ -15,6 +15,7 @@ class Drush extends DrushCommands {
    * Drush command for CiviCRM Group Roles Sync..
    *
    * @param array $options
+   *   Array containing CLI options.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
@@ -25,7 +26,7 @@ class Drush extends DrushCommands {
    * @options uid Optional User ID.
    * @options contact_id Optional Contact ID.
    */
-  public function drush_cgrs($options = ['uid' => NULL, 'contact_id' => NULL]) {
+  public function drushcgrs(array $options = ['uid' => NULL, 'contact_id' => NULL]) {
     /** @var \Drupal\civicrm_group_roles\CivicrmGroupRoles $civicrmGroupRoles */
     $civicrmGroupRoles = \Drupal::service('civicrm_group_roles');
 

@@ -2,7 +2,7 @@ name: CiviGroup Roles Sync
 description: Sync Drupal Roles to CiviCRM Groups.
 package: CiviCRM
 type: module
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 
 configure: civicrm_group_roles.settings
 
